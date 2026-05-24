@@ -1,0 +1,12 @@
+[BULK DRAG COEFFICIENT]
+minimum=1.0
+maximum=4.3
+[ROOT DENSITY]
+minimum=10.0
+maximum=61.0
+[ROOT DIAMETER]
+minimum=0.02
+maximum=0.05
+[ROOT HEIGHT]
+minimum=1.0
+maximum=2.0
