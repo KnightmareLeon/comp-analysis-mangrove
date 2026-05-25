@@ -130,7 +130,13 @@ def linearized_drag_coeff(
     u_0 = wave_amp * math.sqrt(9.8 / water_depth)
     return (4.0 / (3.0 * math.pi * water_depth)) * C_D * N * d_s * h_v * u_0
 
-def run_simulations(scr_config : ScenarioConfig) -> list[Path]:
+def run_simulations(scr_config : ScenarioConfig) -> tuple[list[Path],Path]:
+    """
+    Runs a simulation on based on each mangrove species provided along with the 
+    given scenario configuration.
+
+    Returns a list of the output files and the output directory.
+    """
 
     sp_config_dir = Path.cwd() / 'configs' / 'sp_configs'
 
@@ -241,4 +247,4 @@ def run_simulations(scr_config : ScenarioConfig) -> list[Path]:
             logger.error(f"Error: {e}", exc_info=True)
             sys.exit(1)
 
-    return output_files
+    return output_files, output_dir
