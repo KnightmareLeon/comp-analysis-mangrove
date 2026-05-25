@@ -3,13 +3,16 @@ L=200.0
 d=1.0
 dx=0.5
 T=500.0
+
 [WAVE]
 a=0.3
 omega=0.628
+
 [VEGETATION]
 start=100.0
 end=200.0
 density=average
+
 [NUMERICAL]
 cfl_target=0.4
 output_dt=1.0
