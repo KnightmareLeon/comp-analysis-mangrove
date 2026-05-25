@@ -1,6 +1,6 @@
 [BULK DRAG COEFFICIENT]
-minimum=1.0
-maximum=4.3
+minimum=0.8
+maximum=8.0
 
 [ROOT DENSITY]
 minimum=10.0
