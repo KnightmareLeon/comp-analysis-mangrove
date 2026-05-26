@@ -31,7 +31,15 @@ class Comparator:
                 "energy_loss": (1 - ds.transmission_coefficient_energy**2) * 100,
                 "wave_reduction": ds.wave_height_reduction_percent,
                 "drag_coeff": ds.drag_coefficient,
-                "depth":ds.water_depth
+
+                "depth": ds.water_depth,
+                "wave_amp": ds.wave_amplitude,
+                "wave_period": ds.wave_period,
+                "veg_start": ds.vegetation_start,
+                "veg_end": ds.vegetation_end,
+                "veg_length": ds.vegetation_length,
+                "vegetation_width": ds.vegetation_length / ds.domain_length,
+                "vegetation_cross_shore_distance": ds.domain_length - ds.vegetation_end
             })
 
             ds.close()
@@ -173,4 +181,80 @@ class Comparator:
             title="Species Energy Dissipation Comparison",
             filename="energy_loss.png",
             show=show
+        )
+
+    def plot_controlled_line(
+        self,
+        x_variable: str,
+        y_variable: str,
+        show: bool = False):
+
+        """
+        Creates line plots for controlled experiments.
+
+        x_variable:
+            depth, wave_amp, omega, drag_coeff ...
+
+        y_variable:
+            wave_reduction, energy_loss, Kt
+        """
+
+        if not self.results:
+            return
+
+        plt.figure(figsize=(8,5))
+
+        species_names = sorted(
+            set(r["species"] for r in self.results)
+        )
+
+        for species in species_names:
+
+            species_data = [
+                r for r in self.results
+                if r["species"] == species
+            ]
+
+            species_data.sort(
+                key=lambda r: r[x_variable]
+            )
+
+            x = [r[x_variable] for r in species_data]
+            y = [r[y_variable] for r in species_data]
+
+            plt.plot(
+                x,
+                y,
+                marker='o',
+                label=species
+            )
+
+        plt.xlabel(x_variable.replace("_"," ").title())
+        plt.ylabel(y_variable.replace("_"," ").title())
+
+        plt.title(
+            f"{y_variable.replace('_',' ').title()} vs "
+            f"{x_variable.replace('_',' ').title()}"
+        )
+
+        plt.legend()
+        plt.grid(True)
+
+        plt.tight_layout()
+
+        output_path = (
+            self.output_dir /
+            f"{y_variable}_vs_{x_variable}.png"
+        )
+
+        plt.savefig(output_path, dpi=300)
+
+        if show:
+            plt.show()
+
+        plt.close()
+
+        print(
+            f"\nControlled experiment plot saved to:\n"
+            f"{output_path}"
         )
