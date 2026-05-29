@@ -1,5 +1,6 @@
 from simulation import BatchSimulator
 from comparison import Comparator
+
 if __name__ == "__main__":
 
     simulator = BatchSimulator()
@@ -20,9 +21,8 @@ if __name__ == "__main__":
     comparator.plot_energy_loss()
 
     controlled_output_files, controlled_output_dir = simulator.run_controlled_simulations(
-        variable="veg_end",
-        values=list(range(200, 105, -5)),
-        keep_width=True
+        variable="d",
+        values=[0.25,0.5,0.75,1.0,1.25,1.5,1.75,2.0,2.25,2.5]
     )
 
     controlled_comparator = Comparator(
@@ -31,11 +31,11 @@ if __name__ == "__main__":
     )
 
     controlled_comparator.plot_controlled_line(
-        x_variable="vegetation_cross_shore_distance",
+        x_variable="depth",
         y_variable="wave_reduction"
     )
 
     controlled_comparator.plot_controlled_line(
-        x_variable="vegetation_cross_shore_distance",
+        x_variable="depth",
         y_variable="energy_loss"
     )
